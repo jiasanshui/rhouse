@@ -1,0 +1,28 @@
+server:
+  port: 81
+  tomcat:
+    uri-encoding: utf-8
+  connection-timeout: 18000000
+mybatis:
+  configuration:
+    jdbc-type-for-null: Null
+  mapper-locations:
+    classpath: mapper/*.xml
+spring:
+  datasource:
+    druid:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://49.234.67.243:3306/rent_house
+      username: root
+      password: .13Ping14Tou!
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
+    http:
+
+pagehelper:
+  auto-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
