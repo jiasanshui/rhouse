@@ -4,7 +4,10 @@ import edu.rent.house.config.Response;
 import edu.rent.house.serivce.HouseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("house")
@@ -29,6 +32,36 @@ public class HouseController{
      */
     @RequestMapping("getHouseById")
     public Response getHouseById(Integer houseId){
-        return houseService.getHouseById(houseId);
+        return new Response(200,"查询成功",houseService.getHouseById(houseId));
+    }
+
+    /**
+     * 新增房间信息
+     * @param map
+     * @return
+     */
+    @RequestMapping("saveHouse")
+    public Response saveHouse(@RequestParam Map map){
+        return houseService.saveHouse(map);
+    }
+
+    /**
+     * 房主的房间
+     * @param userId
+     * @return
+     */
+    @RequestMapping("getMyHouse")
+    public Response getMyHouse(Integer userId){
+        return houseService.getMyHouse(userId);
+    }
+
+    /**
+     * 删除房间
+     * @param id
+     * @return
+     */
+    @RequestMapping("deleteHouse")
+    public Response deleteHouse(Integer id){
+        return houseService.deleteHouse(id);
     }
 }

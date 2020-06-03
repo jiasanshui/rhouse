@@ -43,7 +43,10 @@ public interface UserDao {
     int updatePass(Map map);
 
     //修改用户
-    @Update("update t_user set password=#{password},username=#{username}," +
+    @Update("update t_user set username=#{username}," +
             "email=#{email} where id=#{id}")
     int updateUser(Map map);
+
+    @Update("update t_user set identity=2 where id=#{userId}")
+    int updateUserToHouseMaster(Integer userId);
 }

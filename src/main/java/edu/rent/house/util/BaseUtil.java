@@ -7,7 +7,7 @@ import java.util.Random;
 public class BaseUtil {
 
     public static String getNum(){
-        String prefix = "xxx";
+        String prefix = "rh";
         String date = new SimpleDateFormat("yyyyMMdd").format(new Date());
         String suffix = String.valueOf((int)(Math.random() * 9 + 1) * 1000);
         return prefix+date+suffix;
