@@ -65,4 +65,13 @@ public class OrderController {
     public Response finishOrder(Integer id){
         return orderService.finishOrder(id);
     }
+
+    /**
+     * 获取房间列表
+     * @return
+     */
+    @RequestMapping("getOrderList")
+    public Response getOrderList(Integer userId){
+        return orderService.getOrderList(userId);
+    }
 }

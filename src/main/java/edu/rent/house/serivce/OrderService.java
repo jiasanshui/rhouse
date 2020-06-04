@@ -55,4 +55,8 @@ public class OrderService {
         }
         return new Response(501,"操作失败",null);
     }
+
+    public Response getOrderList(Integer userId){
+        return new Response(200,"查询成功",orderDao.getOrderList(userId));
+    }
 }

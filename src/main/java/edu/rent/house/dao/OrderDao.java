@@ -2,9 +2,11 @@ package edu.rent.house.dao;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -28,4 +30,9 @@ public interface OrderDao {
 
     @Update("update t_order set status=4 where id=#{id}")
     Integer rateOrder(Integer id);
+
+    @Select("select o.*,u.username,h.img,h.addr,h.people,h.room_num from t_order o " +
+            "left join t_user u on o.user_id=u.id " +
+            "left join t_house h on o.house_id=h.id where o.user_id=#{userId}")
+    List<Map> getOrderList(Integer userId);
 }
