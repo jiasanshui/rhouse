@@ -103,7 +103,8 @@ public class UserService {
     public Response updateUser(Map map) {
         int i = userDao.updateUser(map);
         if(i>0){
-            return new Response(200,"修改成功",null);
+            Map user = userDao.selectUserById(Integer.valueOf(String.valueOf(map.get("id"))));
+            return new Response(200,"修改成功",user);
         }
         return new Response(501,"修改失败",null);
     }

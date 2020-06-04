@@ -49,4 +49,7 @@ public interface UserDao {
 
     @Update("update t_user set identity=2 where id=#{userId}")
     int updateUserToHouseMaster(Integer userId);
+
+    @Select("select * from t_user where id=#{id}")
+    Map selectUserById(Integer id);
 }
