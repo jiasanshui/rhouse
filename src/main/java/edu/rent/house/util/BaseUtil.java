@@ -1,5 +1,6 @@
 package edu.rent.house.util;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
@@ -24,5 +25,19 @@ public class BaseUtil {
             result+=random.nextInt(10);
         }
         return result;
+    }
+
+    public static String dateFormatStr(String dateStr){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = null;
+        String newDate = null;
+        try {
+            date = sdf.parse(dateStr);
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            newDate = format.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return newDate;
     }
 }

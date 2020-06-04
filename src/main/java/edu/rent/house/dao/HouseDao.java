@@ -12,13 +12,13 @@ import java.util.Map;
 public interface HouseDao {
 
 
-    @Select("select * from t_house")
+    @Select("select h.*,u.username from t_house h left join t_user u on h.user_id=u.id ")
     List<Map> getHouseList();
 
     @Select("select * from t_facility where id=#{fid}")
     Map selectFacilityById(String fid);
 
-    @Select("select * from t_house where id=#{houseId}")
+    @Select("select h.*,u.username from t_house h left join t_user u on h.user_id=u.id where h.id=#{houseId}")
     Map getHouseById(Integer houseId);
 
     @Insert("insert into t_house(img,room_num,bed_num,area,people,house_des,house_facility,addr," +
@@ -26,7 +26,7 @@ public interface HouseDao {
             "#{houseDes},#{houseFacility},#{addr},#{addrInfo},#{housePrice},#{userId}")
     Integer saveHouse(Map map);
 
-    @Select("select * from t_house where user_id=#{userId}")
+    @Select("select h.*,u.username from t_house h left join t_user u on h.user_id=u.id where user_id=#{userId}")
     List<Map> getMyHouse(Integer userId);
 
     @Delete("delete from t_house where id=#{id}")
