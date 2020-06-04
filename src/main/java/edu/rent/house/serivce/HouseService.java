@@ -3,6 +3,7 @@ package edu.rent.house.serivce;
 import edu.rent.house.config.Response;
 import edu.rent.house.dao.HouseDao;
 import edu.rent.house.dao.UserDao;
+import edu.rent.house.util.BaseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -23,6 +24,7 @@ public class HouseService {
         List<Map> houseList = houseDao.getHouseList();
         for (Map house : houseList) {
             String facilityStr = String.valueOf(house.get("house_facility"));
+            house.put("create_time",BaseUtil.dateFormatStr(String.valueOf(house.get("create_time"))));
             this.getFacilityList(house, facilityStr);
         }
         return new Response(200,"查询成功",houseList);
@@ -30,6 +32,7 @@ public class HouseService {
 
     public Map getHouseById(Integer houseId) {
         Map house = houseDao.getHouseById(houseId);
+        house.put("create_time",BaseUtil.dateFormatStr(String.valueOf(house.get("create_time"))));
         String facilityStr = String.valueOf(house.get("house_facility"));
         this.getFacilityList(house, facilityStr);
         return house;
@@ -48,6 +51,7 @@ public class HouseService {
     public Response getMyHouse(Integer userId){
         List<Map> houseList = houseDao.getMyHouse(userId);
         for (Map house : houseList) {
+            house.put("create_time",BaseUtil.dateFormatStr(String.valueOf(house.get("create_time"))));
             this.getFacilityList(house,String.valueOf(house.get("house_facility")));
         }
         return new Response(200,"查询成功",houseList);
