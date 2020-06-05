@@ -18,6 +18,9 @@ public interface HouseDao {
     @Select("select * from t_facility where id=#{fid}")
     Map selectFacilityById(String fid);
 
+    @Select("select * from t_facility")
+    List<Map> getFacilityList();
+
     @Select("select h.*,u.username from t_house h left join t_user u on h.user_id=u.id where h.id=#{houseId}")
     Map getHouseById(Integer houseId);
 

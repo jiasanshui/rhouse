@@ -21,7 +21,8 @@ public class CollectService {
         List<Map> collectList = collectDao.getCollectList(userId);
         for (Map collect : collectList) {
             Integer houseId = Integer.valueOf(String.valueOf(collect.get("house_id")));
-            Map houseMap = houseService.getHouseById(houseId);
+            collect.put("time",collect.get("time"));
+            Map houseMap = houseService.getHouseById(houseId,userId);
             collect.put("houseData",houseMap);
         }
         return new Response(200,"查询成功",collectList);
@@ -29,6 +30,10 @@ public class CollectService {
 
 
     public Response saveCollect(Map map) {
+        Map collect = collectDao.isCollect(map);
+        if(collect!=null){
+            return new Response(502,"您已经收藏该房间",null);
+        }
         Integer saveInt = collectDao.saveCollect(map);
         if(saveInt>0){
             return new Response(200,"添加成功",null);

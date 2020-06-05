@@ -19,8 +19,8 @@ public class RateService {
     public Response saveRate(Map map){
         Integer saveInt = rateDao.saveRate(map);
         if(saveInt>0){
-            Integer houseId = Integer.valueOf(String.valueOf(map.get("houseId")));
-            orderDao.rateOrder(houseId);//订单已经评价
+            Integer orderId = Integer.valueOf(String.valueOf(map.get("orderId")));
+            orderDao.rateOrder(orderId);//订单已经评价
             return new Response(200,"添加成功",null);
         }
         return new Response(501,"添加失败",null);

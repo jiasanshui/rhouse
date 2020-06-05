@@ -1,6 +1,7 @@
 package edu.rent.house.serivce;
 
 import edu.rent.house.config.Response;
+import edu.rent.house.dao.CollectDao;
 import edu.rent.house.dao.HouseDao;
 import edu.rent.house.dao.UserDao;
 import edu.rent.house.util.BaseUtil;
@@ -19,6 +20,8 @@ public class HouseService {
     private HouseDao houseDao;
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private CollectDao collectDao;
 
     public Response getHouseList(){
         List<Map> houseList = houseDao.getHouseList();
@@ -30,7 +33,7 @@ public class HouseService {
         return new Response(200,"查询成功",houseList);
     }
 
-    public Map getHouseById(Integer houseId) {
+    public Map getHouseById(Integer houseId,Integer userId) {
         Map house = houseDao.getHouseById(houseId);
         house.put("create_time",BaseUtil.dateFormatStr(String.valueOf(house.get("create_time"))));
         String facilityStr = String.valueOf(house.get("house_facility"));
@@ -77,5 +80,10 @@ public class HouseService {
             return new Response(200,"删除成功",null);
         }
         return new Response(501,"删除失败",null);
+    }
+
+    public Response getFacilityList(){
+        List<Map> facilityList = houseDao.getFacilityList();
+        return new Response(200,"查询成功",facilityList);
     }
 }

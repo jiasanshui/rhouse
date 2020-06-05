@@ -31,8 +31,8 @@ public class HouseController{
      * @return
      */
     @RequestMapping("getHouseById")
-    public Response getHouseById(Integer houseId){
-        return new Response(200,"查询成功",houseService.getHouseById(houseId));
+    public Response getHouseById(Integer houseId,Integer userId){
+        return new Response(200,"查询成功",houseService.getHouseById(houseId,userId));
     }
 
     /**
@@ -63,5 +63,14 @@ public class HouseController{
     @RequestMapping("deleteHouse")
     public Response deleteHouse(Integer id){
         return houseService.deleteHouse(id);
+    }
+
+    /**
+     * 获取房间设施列表
+     * @return
+     */
+    @RequestMapping("getFacilityList")
+    public Response getFacilityList(){
+        return houseService.getFacilityList();
     }
 }

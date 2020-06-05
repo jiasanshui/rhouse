@@ -14,9 +14,12 @@ public interface CollectDao {
     @Select("select * from t_collect where user_id=#{userId}")
     List<Map> getCollectList(Integer userId);
 
-    @Insert("insert into t_collect(user_id,house_id) values(userId,houseId)")
+    @Insert("insert into t_collect(user_id,house_id) values(#{userId},#{houseId})")
     Integer saveCollect(Map map);
 
     @Delete("delete from t_collect where id=#{id}")
     Integer deleteCollect(Integer id);
+
+    @Select("select * from t_collect where user_id=#{userId} and house_id=#{houseId}")
+    Map isCollect(Map map);
 }

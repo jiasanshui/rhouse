@@ -26,7 +26,7 @@ public class CollectController {
         return collectService.saveCollect(map);
     }
 
-    @RequestMapping("deleteCollect")
+    @RequestMapping("cancelCollect")
     public Response deleteCollect(Integer id){
         return collectService.deleteCollect(id);
     }
