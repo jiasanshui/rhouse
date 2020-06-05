@@ -3,6 +3,7 @@ package edu.rent.house.serivce;
 import edu.rent.house.config.Response;
 import edu.rent.house.dao.CollectDao;
 import edu.rent.house.dao.HouseDao;
+import edu.rent.house.dao.RateDao;
 import edu.rent.house.dao.UserDao;
 import edu.rent.house.util.BaseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +22,10 @@ public class HouseService {
     @Autowired
     private UserDao userDao;
     @Autowired
-    private CollectDao collectDao;
+    private RateDao rateDao;
 
-    public Response getHouseList(){
-        List<Map> houseList = houseDao.getHouseList();
+    public Response getHouseList(Map map){
+        List<Map> houseList = houseDao.getHouseList(map);
         for (Map house : houseList) {
             String facilityStr = String.valueOf(house.get("house_facility"));
             house.put("create_time",BaseUtil.dateFormatStr(String.valueOf(house.get("create_time"))));
@@ -33,11 +34,12 @@ public class HouseService {
         return new Response(200,"查询成功",houseList);
     }
 
-    public Map getHouseById(Integer houseId,Integer userId) {
+    public Map getHouseById(Integer houseId) {
         Map house = houseDao.getHouseById(houseId);
         house.put("create_time",BaseUtil.dateFormatStr(String.valueOf(house.get("create_time"))));
         String facilityStr = String.valueOf(house.get("house_facility"));
         this.getFacilityList(house, facilityStr);
+        this.getRateList(house,houseId);
         return house;
     }
 
@@ -85,5 +87,37 @@ public class HouseService {
     public Response getFacilityList(){
         List<Map> facilityList = houseDao.getFacilityList();
         return new Response(200,"查询成功",facilityList);
+    }
+
+    public void getRateList(Map house,Integer houseId){
+        List<Map> rateList = rateDao.getRateListByHouse(houseId);
+        for (Map map : rateList) {
+            map.put("time",BaseUtil.dateFormatStr(String.valueOf(map.get("time"))));
+        }
+        house.put("rateList",rateList);
+    }
+
+    public Response getAdminHouseList(Map map) {
+        List<Map> houseList = houseDao.getAdminHouseList(map);
+        for (Map house : houseList) {
+            String facilityStr = String.valueOf(house.get("house_facility"));
+            house.put("create_time",BaseUtil.dateFormatStr(String.valueOf(house.get("create_time"))));
+            String[] split = facilityStr.split(",");
+            StringBuffer sb = new StringBuffer();
+            for (String s : split) {
+                Map fa = houseDao.selectFacilityById(s);
+                sb.append(fa.get("facility_name"));
+            }
+            house.put("house_facility",sb.toString());
+        }
+        return new Response(200,"查询成功",houseList);
+    }
+
+    public Response updateHouse(Map map) {
+        Integer i = houseDao.updateHouse(map);
+        if(i>0){
+            return new Response(200,"修改成功",null);
+        }
+        return new Response(501,"修改失败",null);
     }
 }

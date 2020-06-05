@@ -22,7 +22,7 @@ public class CollectService {
         for (Map collect : collectList) {
             Integer houseId = Integer.valueOf(String.valueOf(collect.get("house_id")));
             collect.put("time",collect.get("time"));
-            Map houseMap = houseService.getHouseById(houseId,userId);
+            Map houseMap = houseService.getHouseById(houseId);
             collect.put("houseData",houseMap);
         }
         return new Response(200,"查询成功",collectList);

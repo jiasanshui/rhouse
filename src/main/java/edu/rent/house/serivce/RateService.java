@@ -3,9 +3,11 @@ package edu.rent.house.serivce;
 import edu.rent.house.config.Response;
 import edu.rent.house.dao.OrderDao;
 import edu.rent.house.dao.RateDao;
+import edu.rent.house.util.BaseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -32,5 +34,13 @@ public class RateService {
             return new Response(200,"删除成功",null);
         }
         return new Response(501,"删除失败",null);
+    }
+
+    public Response getRateList(Map map) {
+        List<Map> rateList = rateDao.getRateList(map);
+        for (Map rate : rateList) {
+            rate.put("time", BaseUtil.dateFormatStr(String.valueOf(rate.get("time"))));
+        }
+        return new Response(200,"查询成功",rateList);
     }
 }

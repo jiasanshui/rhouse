@@ -97,4 +97,34 @@ public class UserController {
     public Response updateUser(@RequestParam Map map){
         return userService.updateUser(map);
     }
+
+    /**
+     * 获取用户列表
+     * @param map
+     * @return
+     */
+    @RequestMapping("getUserList")
+    public Response getUserList(@RequestParam Map map){
+        return userService.getUserList(map);
+    }
+
+    /**
+     * 删除用户
+     * @param id
+     * @return
+     */
+    @RequestMapping("deleteUser")
+    public Response deleteUser(Integer id){
+        return userService.deleteUser(id);
+    }
+
+    /**
+     * 系统登录
+     * @param map
+     * @return
+     */
+    @RequestMapping("sysLogin")
+    public Response sysLogin(@RequestParam Map map){
+        return userService.sysLogin(map);
+    }
 }

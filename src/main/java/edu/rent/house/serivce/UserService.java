@@ -18,8 +18,7 @@ public class UserService {
     @Autowired
     private UserDao userDao;
 
-    public Map getUserList(Map map){
-        PageHelper.startPage(Integer.parseInt(map.get("pageNo")+""),Integer.parseInt(map.get("pageSize")+""));
+    public Response getUserList(Map map){
         List<Map> userList = userDao.getUserList(map);
         for (Map user : userList) {
             int status = Integer.parseInt(user.get("status") + "");
@@ -29,11 +28,7 @@ public class UserService {
                 user.put("status","正常");
             }
         }
-        PageInfo<Map> pageInfo = new PageInfo<>(userList);
-        Map resultMap = new HashMap();
-        resultMap.put("total",pageInfo.getTotal());
-        resultMap.put("data",pageInfo.getList());
-        return resultMap;
+        return new Response(200,"查询成功",userList);
     }
 
     public int saveUser(Map map) {
@@ -48,8 +43,12 @@ public class UserService {
         return userDao.getUserById(id);
     }
 
-    public int deleteUser(Integer id) {
-        return userDao.deleteUser(id);
+    public Response deleteUser(Integer id) {
+        int i = userDao.deleteUser(id);
+        if(i>0){
+            return new Response(200,"删除成功",null);
+        }
+        return new Response(501,"删除失败",null);
     }
 
     public Response login(Map map) throws Exception{
@@ -107,5 +106,13 @@ public class UserService {
             return new Response(200,"修改成功",user);
         }
         return new Response(501,"修改失败",null);
+    }
+
+    public Response sysLogin(Map map) {
+        Map user = userDao.sysLogin(map);
+        if(user!=null){
+            return new Response(200,"登录成功",user);
+        }
+        return new Response(501,"登录失败",null);
     }
 }

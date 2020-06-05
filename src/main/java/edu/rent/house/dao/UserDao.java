@@ -13,7 +13,8 @@ import java.util.Map;
 public interface UserDao {
 
     @Select("<script>select * from t_user where 1=1 " +
-            "<if test=\"account!=null and account!=''\">and account=#{account}</if></script>")
+            "<if test=\"account!=null and account!=''\">and account=#{account}</if>" +
+            "<if test=\"username!=null and username!=''\">and username=#{username}</if></script>")
     List<Map> getUserList(Map map);
 
     //添加用户
@@ -52,4 +53,7 @@ public interface UserDao {
 
     @Select("select * from t_user where id=#{id}")
     Map selectUserById(Integer id);
+
+    @Select("select * from t_system_user where account=#{account} and password=#{password}")
+    Map sysLogin(Map map);
 }

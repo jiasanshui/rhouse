@@ -25,8 +25,8 @@ public class HouseController{
      * @return
      */
     @RequestMapping("getHouseList")
-    public Response getHouseList(){
-        return houseService.getHouseList();
+    public Response getHouseList(@RequestParam Map map){
+        return houseService.getHouseList(map);
     }
 
     /**
@@ -35,8 +35,8 @@ public class HouseController{
      * @return
      */
     @RequestMapping("getHouseById")
-    public Response getHouseById(Integer houseId,Integer userId){
-        return new Response(200,"查询成功",houseService.getHouseById(houseId,userId));
+    public Response getHouseById(Integer houseId){
+        return new Response(200,"查询成功",houseService.getHouseById(houseId));
     }
 
     /**
@@ -47,6 +47,16 @@ public class HouseController{
     @RequestMapping("saveHouse")
     public Response saveHouse(@RequestParam Map map){
         return houseService.saveHouse(map);
+    }
+
+    /**
+     * 更新房间信息
+     * @param map
+     * @return
+     */
+    @RequestMapping("updateHouse")
+    public Response updateHouse(@RequestParam Map map){
+        return houseService.updateHouse(map);
     }
 
     /**
@@ -91,4 +101,20 @@ public class HouseController{
         }
         return new Response(200,"上传成功",upload);
     }
+
+    /**
+     * 超级管理员获取房屋列表
+     * @param map
+     * @return
+     */
+    @RequestMapping("getAdminHouseList")
+    public Response getAdminHouseList(@RequestParam Map map){
+        return houseService.getAdminHouseList(map);
+    }
+
+
+
+
+
+
 }

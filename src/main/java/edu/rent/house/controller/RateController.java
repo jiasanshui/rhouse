@@ -35,4 +35,14 @@ public class RateController {
     public Response deleteRate(Integer id){
         return rateService.deleteRate(id);
     }
+
+    /**
+     * 获取全部评论列表
+     * @param map
+     * @return
+     */
+    @RequestMapping("getRateList")
+    public Response getRateList(@RequestParam Map map){
+        return rateService.getRateList(map);
+    }
 }
