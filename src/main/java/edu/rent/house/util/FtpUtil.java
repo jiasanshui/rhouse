@@ -18,7 +18,7 @@ public class FtpUtil {
     private static Integer UPLOAD_PROT  = 21;
     private static String FTP_USRENAME = "ftptest";
     private static String FTP_PASSWORD = "qweewq";
-    private static String REMOTE_PATH = "wenjuMall";
+    private static String REMOTE_PATH = "rentHouse";
 
     /**
      * 将图片上传到ftp远程服务器
@@ -48,7 +48,6 @@ public class FtpUtil {
             boolean success = ftpClient.storeFile(newFileName, input);
             if(success){
                 //根据web站点配置显示图片的路径
-                newFileName = "https://jyjhg.hnesign.cn/"+REMOTE_PATH+"/"+newFileName;
                 return newFileName;
             }
             return "upload_fail";

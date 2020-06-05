@@ -2,10 +2,12 @@ package edu.rent.house.controller;
 
 import edu.rent.house.config.Response;
 import edu.rent.house.serivce.HouseService;
+import edu.rent.house.util.FtpUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 
@@ -15,6 +17,8 @@ public class HouseController{
 
     @Autowired
     private HouseService houseService;
+    @Autowired
+    private FtpUtil ftpUtil = new FtpUtil();
 
     /**
      * 获取房间列表
@@ -72,5 +76,19 @@ public class HouseController{
     @RequestMapping("getFacilityList")
     public Response getFacilityList(){
         return houseService.getFacilityList();
+    }
+
+    /**
+     * 上传图片
+     * @param file
+     * @return
+     */
+    @RequestMapping("uploadImg")
+    public Response uploadImg(@RequestParam("file") MultipartFile file){
+        String upload = ftpUtil.upload(file);
+        if("'upload_fail'".equals(upload)){
+            return new Response(501,"上传失败",null);
+        }
+        return new Response(200,"上传成功",upload);
     }
 }
